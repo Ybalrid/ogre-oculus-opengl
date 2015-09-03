@@ -1,0 +1,9 @@
+*.dll
+*.obj
+*.sdf
+*.opensdf
+*.user
+*.log
+*.tlog
+*.lastbuildstate
+*.pdb
