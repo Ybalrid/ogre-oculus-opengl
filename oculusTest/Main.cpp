@@ -18,11 +18,6 @@
 
 enum eyes{left, right, nbEyes};
 
-int max(int a, int b)
-{
-	if (a > b) return a; return b;
-}
-
 mainFunc()
 {
 	//Create Root object
@@ -121,7 +116,7 @@ mainFunc()
 	//calculate render buffer size
 	ovrSizei bufferSize;
 	bufferSize.w = texSizeL.w + texSizeR.w;
-	bufferSize.h = max(texSizeL.h, texSizeR.h);
+	bufferSize.h = std::max(texSizeL.h, texSizeR.h);
 
 	//Set texture parameters
 	ovrTextureSwapChainDesc textureSwapChainDesc = {};
