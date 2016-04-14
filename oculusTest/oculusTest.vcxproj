@@ -69,14 +69,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\Oculus\AnnwvynSDK_64\glew\include\;D:\Oculus\AnnwvynSDK_64\glew\include\GL;D:\Oculus\AnnwvynSDK_64\OculusSDK\LibOVRKernel\Src;D:\Oculus\AnnwvynSDK_64\OculusSDK\LibOVR\Include;D:\Oculus\AnnwvynSDK_64\OgreSDK\include\OIS;D:\Oculus\AnnwvynSDK_64\OgreSDK\include\OGRE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Oculus\AnnwvynSDK64\glew\include\;C:\Oculus\AnnwvynSDK64\glew\include\GL;C:\Oculus\AnnwvynSDK64\OculusSDK\LibOVRKernel\Src;C:\Oculus\AnnwvynSDK64\OculusSDK\LibOVR\Include;C:\Oculus\AnnwvynSDK64\OgreSDK\include\OIS;C:\Oculus\AnnwvynSDK64\OgreSDK\include\OGRE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>D:\Oculus\AnnwvynSDK_64\glew\lib\Release\x64;D:\Oculus\AnnwvynSDK_64\OculusSDK\LibOVR\Lib\Windows\x64\Release\VS2012;D:\Oculus\AnnwvynSDK_64\OgreSDK\lib\release\opt;D:\Oculus\AnnwvynSDK_64\OgreSDK\lib\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Oculus\AnnwvynSDK64\glew\lib\Release\x64;C:\Oculus\AnnwvynSDK64\OculusSDK\LibOVR\Lib\Windows\x64\Release\VS2012;C:\Oculus\AnnwvynSDK64\OgreSDK\lib\release\opt;C:\Oculus\AnnwvynSDK64\OgreSDK\lib\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>OgreMain.lib;RenderSystem_GL.lib;Setupapi.lib;LibOVR.lib;Winmm.lib;opengl32.lib;glew32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
