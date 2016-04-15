@@ -23,8 +23,8 @@ mainFunc()
 	//Create Root object
 	Ogre::Root* root = new Ogre::Root("plugin.cfg", "ogre.cfg");
 	//opengl
-    root->loadPlugin("RenderSystem_GL");
-    root->setRenderSystem(root->getRenderSystemByName("OpenGL Rendering Subsystem"));
+	root->loadPlugin("RenderSystem_GL");//1
+	root->setRenderSystem(root->getRenderSystemByName("OpenGL Rendering Subsystem"));
 
 	//Initialize Root
 	root->initialise(false);
@@ -33,10 +33,10 @@ mainFunc()
 	ovrSession session;
 	ovrHmdDesc hmdDesc;
 	ovrGraphicsLuid luid;
-	ovr_Initialize(nullptr);
+	ovr_Initialize(nullptr);//2
 	if(ovr_Create(&session, &luid) != ovrSuccess)
 		exit(-1);
-	hmdDesc = ovr_GetHmdDesc(session);
+	hmdDesc = ovr_GetHmdDesc(session);//3
 
 	Ogre::NameValuePairList misc;
 	misc["top"] = "0";
@@ -84,7 +84,6 @@ mainFunc()
 	Ogre::MaterialPtr DebugPlaneMaterial = Ogre::MaterialManager::getSingleton().create("debugMat", "General", true);
 	Ogre::TextureUnitState* debugTexturePlane = DebugPlaneMaterial.getPointer()->getTechnique(0)->getPass(0)->createTextureUnitState();
 
-
 	Ogre::ManualObject* debugRenderPlane = debugSmgr->createManualObject("debugplane");
 	debugRenderPlane->begin("debugMat",Ogre::RenderOperation::OT_TRIANGLE_STRIP);
 	debugRenderPlane->position(-x, y, 0);
@@ -101,9 +100,6 @@ mainFunc()
 
 	Ogre::Viewport* debugViewport = window->addViewport(debugCam);
 	debugViewport->setBackgroundColour(Ogre::ColourValue::Green);
-
-
-
 
 	//init glew
 	if(glewInit() != GLEW_OK)
@@ -145,8 +141,8 @@ mainFunc()
 	Ogre::Viewport* vpts[nbEyes];
 	vpts[left]=rttEyes->addViewport(cams[left], 0, 0, 0, 0.5f);
 	vpts[right]=rttEyes->addViewport(cams[right], 1, 0.5f, 0, 0.5f);
-	vpts[left]->setBackgroundColour(Ogre::ColourValue::Blue);
-	vpts[right]->setBackgroundColour(Ogre::ColourValue::Blue);
+	vpts[left]->setBackgroundColour(Ogre::ColourValue::White);
+	vpts[right]->setBackgroundColour(Ogre::ColourValue::White);
 
 	//Fill in MirrorTexture parameters
 	ovrMirrorTextureDesc mirrorTextureDesc = {};
@@ -154,7 +150,6 @@ mainFunc()
 	mirrorTextureDesc.Height = hmdDesc.Resolution.h;
 	mirrorTextureDesc.Format = OVR_FORMAT_R8G8B8A8_UNORM_SRGB;	
 
-	
 	ovrMirrorTexture mirrorTexture;
 	if (ovr_CreateMirrorTextureGL(session, &mirrorTextureDesc, &mirrorTexture) != ovrSuccess)
 		exit(-5);
@@ -166,7 +161,6 @@ mainFunc()
 	GLuint oculusMirrorTextureID ;
 
 	ovr_GetMirrorTextureBufferGL(session, mirrorTexture, &oculusMirrorTextureID);
-
 
 	//Create EyeRenderDesc
 	ovrEyeRenderDesc EyeRenderDesc[nbEyes];
@@ -243,9 +237,8 @@ mainFunc()
 	debugTexturePlane->setTextureFiltering(Ogre::FO_POINT, Ogre::FO_POINT, Ogre::FO_NONE);
 	debugViewport->setAutoUpdated(false);
 
-
 	//rgm->initialiseAllResourceGroups();
-//	smgr->createEntity("Sinbad.mesh");
+	//	smgr->createEntity("Sinbad.mesh");
 
 	while(render)
 	{
@@ -255,12 +248,12 @@ mainFunc()
 		ovr_GetTextureSwapChainBufferGL(session, textureSwapChain, currentIndex, &oculusRenderTextureGLID);
 		ovr_GetMirrorTextureBufferGL(session, mirrorTexture, &oculusMirrorTextureID);
 
+		//Get the tracking state 
+		ts = ovr_GetTrackingState(session, 
+			currentFrameDisplayTime = ovr_GetPredictedDisplayTime(session, 0),
+			ovrTrue);
 
-//Get the tracking state 
-	ts = ovr_GetTrackingState(session, 
-		currentFrameDisplayTime = ovr_GetPredictedDisplayTime(session, 0),
-		ovrTrue);
-			pose = ts.HeadPose.ThePose;
+		pose = ts.HeadPose.ThePose;
 		ovr_CalcEyePoses(pose, offset, layer.RenderPose);
 		oculusOrient = pose.Rotation;
 		oculusPos = pose.Translation;
@@ -271,15 +264,15 @@ mainFunc()
 			cams[eye]->setPosition
 				(cameraPosition  //the "gameplay" position of player's avatar head
 
-			+ (cams[eye]->getOrientation() * Ogre::Vector3( //realword camera orientation + the  
-			EyeRenderDesc[eye].HmdToEyeOffset.x, //view adjust vector.
-			EyeRenderDesc[eye].HmdToEyeOffset.y, //The translations has to occur in function of the current head orientation.
-			EyeRenderDesc[eye].HmdToEyeOffset.z) //That's why just multiply by the quaternion we just calculated. 
+				+ (cams[eye]->getOrientation() * Ogre::Vector3( //realword camera orientation + the  
+				EyeRenderDesc[eye].HmdToEyeOffset.x, //view adjust vector.
+				EyeRenderDesc[eye].HmdToEyeOffset.y, //The translations has to occur in function of the current head orientation.
+				EyeRenderDesc[eye].HmdToEyeOffset.z) //That's why just multiply by the quaternion we just calculated. 
 
-			+ cameraOrientation * Ogre::Vector3( //cameraOrientation is in fact the direction the avatar is facing expressed as an Ogre::Quaternion
-			oculusPos.x,
-			oculusPos.y,
-			oculusPos.z)));
+				+ cameraOrientation * Ogre::Vector3( //cameraOrientation is in fact the direction the avatar is facing expressed as an Ogre::Quaternion
+				oculusPos.x,
+				oculusPos.y,
+				oculusPos.z)));
 		}
 
 		root->_fireFrameRenderingQueued();
@@ -288,8 +281,8 @@ mainFunc()
 
 		//Copy the rendered image to the Oculus Swap Texture
 		glCopyImageSubData(renderTextureID, GL_TEXTURE_2D, 0, 0, 0, 0, 
-		oculusRenderTextureGLID, GL_TEXTURE_2D, 0, 0, 0, 0, 
-		bufferSize.w,bufferSize.h, 1);
+			oculusRenderTextureGLID, GL_TEXTURE_2D, 0, 0, 0, 0, 
+			bufferSize.w,bufferSize.h, 1);
 
 		layers = &layer.Header;
 		ovr_CommitTextureSwapChain(session, textureSwapChain);
@@ -297,8 +290,8 @@ mainFunc()
 
 		//Put the mirrored view available for OGRE
 		glCopyImageSubData(oculusMirrorTextureID, GL_TEXTURE_2D, 0, 0, 0, 0, 
-		ogreMirrorTextureID, GL_TEXTURE_2D, 0, 0, 0, 0, 
-		hmdDesc.Resolution.w, hmdDesc.Resolution.h, 1);
+			ogreMirrorTextureID, GL_TEXTURE_2D, 0, 0, 0, 0, 
+			hmdDesc.Resolution.w, hmdDesc.Resolution.h, 1);
 
 		debugViewport->update();
 		window->update();
